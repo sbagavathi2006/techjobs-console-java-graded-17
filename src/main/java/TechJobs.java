@@ -1,7 +1,6 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+//import com.sun.source.tree.UsesTree;
+
+import java.util.*;
 
 /**
  * Created by LaunchCode
@@ -56,15 +55,15 @@ public class TechJobs {
 
                 // How does the user want to search (e.g. by skill or employer)
                 String searchField = getUserSelection("Search by:", columnChoices);
+                //String SearchValue =
 
                 // What is their search term?
                 System.out.println("\nSearch term:");
                 String searchTerm = in.nextLine();
 
+
                 if (searchField.equals("all")) {
                     printJobs(JobData.findByValue(searchTerm));
-                } else if (!searchField.equals("all")){
-                    System.out.println("No Results");
                 } else {
                     printJobs(JobData.findByColumnAndValue(searchField, searchTerm));
                 }
@@ -119,14 +118,19 @@ public class TechJobs {
 
     // Print a list of jobs
     private static void printJobs(ArrayList<HashMap<String, String>> someJobs) {
-        for (HashMap<String, String> job : someJobs) {
-            System.out.println("*****");
-            System.out.println("position type: " + job.get("position type"));
-            System.out.println("name: " + job.get("name"));
-            System.out.println("employer: " + job.get("employer"));
-            System.out.println("location: " + job.get("location"));
-            System.out.println("core competency: " + job.get("core competency"));
-            System.out.println("*****\n");
+       // System.out.println(someJobs);
+        if(someJobs.isEmpty()){
+            System.out.println("No Results");
+        } else {
+            for (Map<String, String> job : someJobs) {
+                System.out.println("*****");
+                for (Map.Entry<String, String> entry : job.entrySet()) {
+                    String key = entry.getKey();
+                    String value = entry.getValue();
+                    System.out.println(key + ": " + value);
+                }
+                System.out.println("*****\n");
+            }
         }
     }
 }
